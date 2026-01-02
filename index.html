@@ -1,88 +1,186 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- =========================================================
+       BASIC META
+       ========================================================= -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>For You ❤️</title>
+
+  <!-- =========================================================
+       STYLESHEET
+       ========================================================= -->
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<!-- HERO -->
-<section class="hero">
+<!-- =========================================================
+     ACT 1 — INTRO / HERO
+     Calm, text-first, emotional
+     ========================================================= -->
+<section class="hero intro">
+
   <div class="hero-content">
-    <h1 class="reveal center slow futuristic">Hey <span class="name">My Love</span> ❤️</h1>
-    <p class="reveal center subtitle">
+
+    <!-- MAIN TITLE -->
+    <h1 class="reveal center slow futuristic">
+      Hey <span class="name">My Love</span> ❤️
+    </h1>
+
+    <!-- SUBTITLE -->
+    <p class="reveal center subtitle delay">
       Every line here exists because of you.
     </p>
+
+    <!-- DECORATIVE HEARTS -->
     <div class="hearts" aria-hidden="true">
       <span class="heart">❤</span>
       <span class="heart">❤</span>
       <span class="heart">❤</span>
-      <span class="heart">❤</span>
-      <span class="heart">❤</span>
     </div>
+
   </div>
 </section>
 
-<!-- STORY -->
+<!-- =========================================================
+     ACT 2 / 3 / 4 — STORY FLOW
+     Center → Side → Side → Ending
+     ========================================================= -->
 <section class="story">
 
+  <!-- ======================
+       STORY BLOCK 1 (CENTER)
+       ====================== -->
   <div class="story-item center">
-    <img class="reveal center" src="img1.jpg.jpg">
-    <div class="story-text reveal center">
+    <img
+      src="img1.jpg.jpg"
+      alt="Memory one"
+      class="reveal center slow"
+    >
+
+    <div class="story-text reveal center delay">
       It all began without warning.
     </div>
   </div>
 
+  <!-- ======================
+       STORY BLOCK 2 (LEFT)
+       ====================== -->
   <div class="story-item left">
-    <img class="reveal left" src="img2.jpg.jpg">
-    <div class="story-text reveal right">
-      You walked in quietly,<br>and everything shifted.
+
+    <img
+      src="img2.jpg.jpg"
+      alt="Memory two"
+      class="reveal left"
+    >
+
+    <div class="story-text reveal right delay">
+      You walked in quietly,<br>
+      and everything shifted.
     </div>
+
   </div>
 
+  <!-- ======================
+       STORY BLOCK 3 (RIGHT)
+       ====================== -->
   <div class="story-item right">
-    <img class="reveal right" src="img3.jpg.jpg">
-    <div class="story-text reveal left">
+
+    <img
+      src="img3.jpg.jpg"
+      alt="Memory three"
+      class="reveal right"
+    >
+
+    <div class="story-text reveal left delay">
       Some moments refuse to fade.
     </div>
+
   </div>
 
+  <!-- ======================
+       STORY BLOCK 4 (LEFT)
+       ====================== -->
   <div class="story-item left">
-    <img class="reveal left" src="img4.jpg.jpg">
-    <div class="story-text reveal right">
+
+    <img
+      src="img4.jpg.jpg"
+      alt="Memory four"
+      class="reveal left"
+    >
+
+    <div class="story-text reveal right delay">
       I started seeing the world differently.
     </div>
+
   </div>
 
+  <!-- ======================
+       STORY BLOCK 5 (RIGHT)
+       ====================== -->
   <div class="story-item right">
-    <img class="reveal right" src="img5.jpg.jpg">
-    <div class="story-text reveal left">
+
+    <img
+      src="img5.jpg.jpg"
+      alt="Memory five"
+      class="reveal right"
+    >
+
+    <div class="story-text reveal left delay">
       And somehow… it felt right.
     </div>
+
   </div>
 
+  <!-- ======================
+       STORY BLOCK 6 (ENDING)
+       ====================== -->
   <div class="story-item center end">
-    <img class="reveal center" src="img6jpg.jpg">
-    <div class="story-text reveal center">
-      This isn’t the end.<br>It’s a promise.
+
+    <img
+      src="img6jpg.jpg"
+      alt="Final memory"
+      class="reveal center slow"
+    >
+
+    <div class="story-text reveal center big delay">
+      This isn’t the end.<br>
+      It’s a promise.
     </div>
+
   </div>
 
 </section>
 
-<!-- ENDING -->
+<!-- =========================================================
+     FINAL MESSAGE SECTION
+     ========================================================= -->
 <section class="final">
-  <button id="btn">One Last Truth</button>
+
+  <!-- BUTTON -->
+  <button id="btn">
+    One Last Truth
+  </button>
+
+  <!-- FINAL TEXT -->
   <p id="finalText" class="reveal center"></p>
+
 </section>
 
-<!-- MUSIC -->
+<!-- =========================================================
+     BACKGROUND MUSIC
+     Mobile-safe autoplay logic handled in JS
+     ========================================================= -->
 <audio id="bgm" preload="auto" loop>
   <source src="bgm.mp3" type="audio/mpeg">
 </audio>
 
+<!-- =========================================================
+     JAVASCRIPT
+     ========================================================= -->
 <script src="script.js"></script>
+
 </body>
 </html>

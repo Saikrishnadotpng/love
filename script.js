@@ -1,63 +1,152 @@
-/* SCROLL REVEAL */
-const reveals = document.querySelectorAll(".reveal");
+/* =========================================================
+   PROJECT: CINEMATIC LOVE WEBSITE
+   FILE: script.js
+   ========================================================= */
 
-function revealOnScroll() {
-  const windowHeight = window.innerHeight;
 
-  reveals.forEach(el => {
-    const top = el.getBoundingClientRect().top;
-    if (top < windowHeight - 100) {
-      el.classList.add("show");
-    } else {
-      el.classList.remove("show");
+/* =========================================================
+   GLOBAL SELECTORS
+   ========================================================= */
+
+const revealElements = document.querySelectorAll(".reveal");
+const finalButton = document.getElementById("btn");
+const finalText = document.getElementById("finalText");
+const bgm = document.getElementById("bgm");
+
+let windowHeight = window.innerHeight;
+
+
+/* =========================================================
+   HELPER
+   ========================================================= */
+
+function clamp(value, min, max) {
+  return Math.min(Math.max(value, min), max);
+}
+
+
+/* =========================================================
+   SMOOTH SCROLL REVEAL (FINAL VERSION)
+   ========================================================= */
+
+function handleScrollReveal() {
+  revealElements.forEach(el => {
+    const rect = el.getBoundingClientRect();
+
+    // Start reveal early for smooth entry
+    if (rect.top < windowHeight * 0.92) {
+
+      // IMAGE reveals first
+      if (el.tagName === "IMG") {
+        el.classList.add("show");
+      }
+
+      // TEXT reveals slightly later
+      else {
+        if (!el.classList.contains("show")) {
+          setTimeout(() => {
+            el.classList.add("show");
+          }, 180);
+        }
+      }
     }
   });
 }
 
-window.addEventListener("scroll", revealOnScroll);
-revealOnScroll();
+window.addEventListener("scroll", handleScrollReveal);
+window.addEventListener("load", handleScrollReveal);
 
 
-/* FINAL TEXT */
-const messages = [
+/* =========================================================
+   FINAL MESSAGE BUTTON
+   ========================================================= */
+
+const finalMessages = [
   "No matter where life goes, I choose you.",
   "You are my calm in every storm.",
   "Even my worst days feel lighter with you.",
   "This page ends… but I don’t."
 ];
 
-let index = 0;
-const btn = document.getElementById("btn");
-const finalText = document.getElementById("finalText");
+let finalIndex = 0;
 
-btn.addEventListener("click", () => {
-  finalText.innerText = messages[index];
-  index = (index + 1) % messages.length;
+finalButton.addEventListener("click", () => {
+  finalText.innerText = finalMessages[finalIndex];
+  finalText.classList.add("show");
+
+  finalIndex++;
+  if (finalIndex >= finalMessages.length) {
+    finalIndex = 0;
+  }
 });
 
 
-/* BGM – MOBILE SAFE FADE IN */
-const music = document.getElementById("bgm");
-let started = false;
+/* =========================================================
+   BACKGROUND MUSIC (MOBILE SAFE + FADE IN)
+   ========================================================= */
 
-function startMusic() {
-  if (!started) {
-    music.volume = 0;
-    music.play();
+let musicStarted = false;
 
-    let v = 0;
-    const fade = setInterval(() => {
-      if (v < 0.5) {
-        v += 0.02;
-        music.volume = v;
-      } else {
-        clearInterval(fade);
-      }
-    }, 100);
+function startBackgroundMusic() {
+  if (musicStarted) return;
 
-    started = true;
-  }
+  musicStarted = true;
+
+  bgm.volume = 0;
+  bgm.play().catch(() => {});
+
+  let volume = 0;
+  const fadeIn = setInterval(() => {
+    volume += 0.015;
+    bgm.volume = clamp(volume, 0, 0.45);
+
+    if (volume >= 0.45) {
+      clearInterval(fadeIn);
+    }
+  }, 120);
 }
 
-window.addEventListener("click", startMusic, { once: true });
-window.addEventListener("scroll", startMusic, { once: true });
+window.addEventListener("click", startBackgroundMusic, { once: true });
+window.addEventListener("scroll", startBackgroundMusic, { once: true });
+
+
+/* =========================================================
+   ENDING CALM (MUSIC SOFTENS)
+   ========================================================= */
+
+const finalSection = document.querySelector(".final");
+
+if (finalSection) {
+  const endObserver = new IntersectionObserver(
+    entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && musicStarted) {
+
+          let volume = bgm.volume;
+
+          const fadeDown = setInterval(() => {
+            volume -= 0.01;
+            bgm.volume = clamp(volume, 0.25, 0.45);
+
+            if (volume <= 0.25) {
+              clearInterval(fadeDown);
+            }
+          }, 120);
+
+        }
+      });
+    },
+    { threshold: 0.6 }
+  );
+
+  endObserver.observe(finalSection);
+}
+
+
+/* =========================================================
+   RESIZE HANDLING
+   ========================================================= */
+
+window.addEventListener("resize", () => {
+  windowHeight = window.innerHeight;
+});
